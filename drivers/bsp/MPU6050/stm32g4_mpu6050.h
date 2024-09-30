@@ -28,6 +28,9 @@
 #ifndef BSP_MPU6050_STM32G4_MPU6050_H_
 #define BSP_MPU6050_STM32G4_MPU6050_H_
 
+#include <stdint.h>
+#include "config.h"
+
 #if USE_MPU6050
 
 /* Exported macros -----------------------------------------------------------*/
@@ -150,7 +153,51 @@ typedef struct {
 	float Temperature;       /*!< Température en degrés */
 } MPU6050_t;
 
+/**
+ * @brief	Initialise le module MPU6050 en activant son alimentation, puis en configurant les registres internes du MPU6050.
+ * @param	GPIOx et GPIO_PIN_x : indiquent la broche où l'on a relié l'alimentation Vcc du MPU6050.
+ * 			Indiquer NULL dans GPIOx s'il est alimenté en direct.
+ * 			Cette possibilité d'alimentation par la broche permet le reset du module par le microcontrôleur.
+ * @param	DataStruct : fournir le pointeur vers une structure qui sera à conserver pour les autres appels des fonctions de ce module logiciel.
+ * @param 	DeviceNumber : 					voir MPU6050_Device_t
+ * @param	AccelerometerSensitivity : 		voir MPU6050_Accelerometer_t
+ * @param	GyroscopeSensitivity :			voir MPU6050_Gyroscope_t
+ */
+MPU6050_Result_t MPU6050_Init(MPU6050_t* DataStruct, GPIO_TypeDef * GPIOx, uint16_t GPIO_PIN_x, MPU6050_Device_t DeviceNumber, MPU6050_Accelerometer_t AccelerometerSensitivity, MPU6050_Gyroscope_t GyroscopeSensitivity);
 
+/**
+ * @brief Tout est dans le nom de la fonction
+ * @param DataStruct: pointeur vers la structure où vont être stockées les données
+ * @return Message de réussite de l'opération
+ */
+MPU6050_Result_t MPU6050_ReadAccelerometer(MPU6050_t* DataStruct);
+
+/**
+ * @brief Tout est dans le nom de la fonction
+ * @param DataStruct: pointeur vers la structure où vont être stockées les données
+ * @return Message de réussite de l'opération
+ */
+MPU6050_Result_t MPU6050_ReadGyroscope(MPU6050_t* DataStruct);
+
+/**
+ * @brief Tout est dans le nom de la fonction
+ * @param DataStruct: pointeur vers la structure où vont être stockées les données
+ * @return Message de réussite de l'opération
+ */
+MPU6050_Result_t MPU6050_ReadTemperature(MPU6050_t* DataStruct);
+
+/**
+ * @brief Tout est dans le nom de la fonction
+ * @param DataStruct: pointeur vers la structure où vont être stockées les données
+ * @return Message de réussite de l'opération
+ */
+MPU6050_Result_t MPU6050_ReadAll(MPU6050_t* DataStruct);
+
+/**
+ * @brief Fonction de démo pour prendre en main le capteur rapidement.
+ * @pre /!\ Cette fonction est blocante /!\
+ */
+void MPU6050_demo(void);
 
 #endif /* BSP_MPU6050_STM32G4_MPU6050_H_ */
 #endif

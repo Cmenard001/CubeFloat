@@ -50,10 +50,10 @@
 #endif
 
 #define USE_EPAPER			0 // e-paper (écran basse consommation)
-#define USE_WS2812			0 // Matrice de led
+#define USE_WS2812			1 // Matrice de led
 
 /*------------------Capteurs------------------*/
-#define USE_MPU6050			0 // Accéléromètre, Gyroscope
+#define USE_MPU6050			1 // Accéléromètre, Gyroscope
 #define USE_APDS9960		0 // Capteur de mouvements, présence, couleurs
 #define USE_BMP180			0 // Capteur de pression atmosphérique
 #define USE_BH1750FVI		0 // Capteur de luminosité ambiante
