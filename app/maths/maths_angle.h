@@ -9,6 +9,7 @@
  * @see PI_INT It's the unit of the angle_t type
  * @note The range of the angle is [0, 2*PI_INT)
  * @warning This type cannot represent a multiple of turn
+ * @warning An angle cannot be negative with this type
  * @see full_angle_t for a type that can represent a multiple of turn
  * @note We can use overflow to make a modulo operation
  */
@@ -19,9 +20,10 @@ typedef uint16_t angle_t;
  * @see PI_INT It's the unit of the full_angle_t type
  * @note The range of the angle is [0, 2*PI_INT)
  * @note This type can represent a multiple of turn
+ * @note An angle can be negative with this type
  * @see angle_t for a type that cannot represent a multiple of turn
  */
-typedef uint32_t full_angle_t;
+typedef int32_t full_angle_t;
 
 /**
  * @brief Unit of the angle_t and full_angle_t types
