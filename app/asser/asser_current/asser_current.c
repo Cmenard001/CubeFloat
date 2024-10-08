@@ -1,6 +1,6 @@
 #include "asser_current.h"
 #include "stm32g4_adc.h"
-#include "motor/motor.h"
+#include "asser/motor/motor.h"
 #include "stm32g4_systick.h"
 
 #include <stdint.h>
@@ -79,6 +79,10 @@ current_t asser_current_get()
     // The current return is in mA
     // So the formula is :
     current_t current = (current_t)((((int32_t)adc_mesure)*5000)/4096) - CURRENT_OFFSET;
+    if (current_order < 0)
+    {
+        current = -current;
+    }
     return current;
 }
 
