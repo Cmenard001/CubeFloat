@@ -3,13 +3,14 @@
  * @file	stm32g4_adc.h
  * @author	vchav
  * @date	May 23, 2024
- * @brief	
+ * @brief
  *******************************************************************************
  */
 #ifndef BSP_STM32G4_ADC_H_
 #define BSP_STM32G4_ADC_H_
 
 #include "config.h"
+#include <stdint.h>
 
 #if USE_ADC
 

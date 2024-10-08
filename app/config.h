@@ -28,10 +28,10 @@
 
 #define USE_RTC				0
 
-#define USE_ADC				0
+#define USE_ADC				1
 	/* Configuration pour activer les entrÃ©es analogiques souhaitÃ©es */
 	#define USE_IN1		1 //Broche correspondante: PA0
-	#define USE_IN2		1 //Broche correspondante: PA1
+	#define USE_IN2		0 //Broche correspondante: PA1
 	#define USE_IN3		0 //Broche correspondante: PA6
 	#define USE_IN4		0 //Broche correspondante: PA7
 	#define USE_IN10	0 //Broche correspondante: PF1 /!\ Broche indisponible sur g431 sauf si SB11 et pas SB10 (petits pads Ã  souder sur la carte)
@@ -81,7 +81,7 @@
 #define USE_SD_CARD			0 // Carte SD pour lire/écrire des fichiers
 
 /*------------------Actionneurs------------------*/
-#define USE_MOTOR_DC		0
+#define USE_MOTOR_DC		1
 
 /*------------------Périphériques------------------*/
 
