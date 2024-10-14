@@ -353,10 +353,10 @@ static running_t MOTOR_gpio_and_pin_to_pwm_channel(GPIO_TypeDef * gpio, uint16_t
 void BSP_MOTOR_set_duty(motor_id_e id, int16_t duty)
 {
 	//Ecretage... Le rapport cyclique est exprimé dans la même unité que la PWM_PERIOD, il ne peut donc pas être plus grand !
-	if(duty > 100)
-		duty = 100;
-	else if(duty < -100)
-		duty = -100;
+	if(duty > 1000)
+		duty = 1000;
+	else if(duty < -1000)
+		duty = -1000;
 
 
 	if(motors[id].enable == false)

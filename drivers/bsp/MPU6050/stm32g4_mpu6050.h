@@ -36,7 +36,7 @@
 /* Exported macros -----------------------------------------------------------*/
 /* I2C par défaut utilisé */
 #ifndef MPU6050_I2C
-	#define	MPU6050_I2C					I2C3
+	#define	MPU6050_I2C					I2C1
 	#define MPU6050_I2C_PINSPACK		I2C_PinsPack_1
 #endif
 
