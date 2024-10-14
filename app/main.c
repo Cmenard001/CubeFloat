@@ -14,6 +14,9 @@
 #include "stm32g4_gpio.h"
 #include "stm32g4_uart.h"
 #include "stm32g4_utils.h"
+#include "asser/asser_current/asser_current.h"
+#include "asser/motor/motor.h"
+#include "mpu/mpu.h"
 
 #include <stdio.h>
 
@@ -71,15 +74,14 @@ int main(void)
 	/* Hello student */
 	printf("Hi <Student>, can you read me?\n");
 
+	asser_current_init();
+	asser_current_set_order(0);
+	motor_set_voltage(0);
+	mpu_init();
+
 	/* Tâche de fond, boucle infinie, Infinite loop,... quelque soit son nom vous n'en sortirez jamais */
 	while (1)
 	{
-		if( char_received(UART2_ID) )
-		{
-			t=100;	/* t? Faites un ctrl+clic dessus pour voir... */
-			write_LED(true);	/* ... ça fonctionne aussi avec les macros, les fonctions. C'est votre nouveau meilleur ami */
-			while(t);
-			write_LED(false);
-		}
+		asser_current_process();
 	}
 }
