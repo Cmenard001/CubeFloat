@@ -5,13 +5,11 @@
 
 #include <stdint.h>
 
-#define VOLTAGE_INCREMENT 1 // (mV)
-#define TIME_BTWN_MEASURE 30 // (µs)
+#define VOLTAGE_INCREMENT 100 // (mV)
+#define TIME_BTWN_MEASURE 1000 // (µs)
 #define VOLTAGE_MAX (MOTOR_POWER_SUPPLY)
 #define VOLTAGE_MIN (-MOTOR_POWER_SUPPLY)
 #define CURRENT_OFFSET 50 // mA
-#define COEFF_P 100
-#define COEFF_BASE 100
 
 #define DIRECTION(A) ((A) > 0 ? true : false)
 

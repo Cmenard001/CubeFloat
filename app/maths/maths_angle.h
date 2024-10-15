@@ -25,6 +25,12 @@ typedef int16_t angle_t;
 typedef int32_t full_angle_t;
 
 /**
+ * @brief Type for angular speed
+ * @note unit is PI_INT/ms
+ */
+typedef int32_t angular_speed_t;
+
+/**
  * @brief Unit of the angle_t and full_angle_t types
  * @see angle_t and full_angle_t
  */

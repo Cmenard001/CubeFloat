@@ -3,11 +3,16 @@
 
 #include "maths/maths_angle.h"
 
-
 /**
  * @brief Function to initialize the MPU
  */
 void mpu_init();
+
+/**
+ * @brief Function to process the MPU
+ * @note This function must be called in the main loop
+ */
+void mpu_process();
 
 /**
  * @brief Function to get the angle from the MPU
@@ -17,5 +22,11 @@ void mpu_init();
  */
 angle_t mpu_get_angle();
 
+/**
+ * @brief Function to get the angular speed from the MPU
+ *
+ * @return angular_speed_t
+ */
+angular_speed_t mpu_get_angular_speed();
 
 #endif
