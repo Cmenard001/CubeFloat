@@ -53,4 +53,20 @@ int16_t angle_to_deg(full_angle_t angle);
  */
 full_angle_t deg_to_angle(int16_t angle);
 
+/**
+ * @brief Function to convert an angle to a radian
+ *
+ * @param angle The angle to convert
+ * @return float The angle in radian
+ */
+float angle_to_rad(angle_t angle);
+
+/**
+ * @brief Function to convert a radian to an angle
+ *
+ * @param rad The radian to convert
+ * @return angle_t The angle
+ */
+angle_t rad_to_angle(float rad);
+
 #endif

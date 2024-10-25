@@ -9,12 +9,6 @@
 void mpu_init();
 
 /**
- * @brief Function to process the MPU
- * @note This function must be called in the main loop
- */
-void mpu_process();
-
-/**
  * @brief Function to get the angle from the MPU
  * @note The angle is relative to the vertical axis
  *

@@ -17,7 +17,6 @@
 #include "asser/asser_current/asser_current.h"
 #include "asser/motor/motor.h"
 #include "asser/asser_angle/asser_angle.h"
-#include "mpu/mpu.h"
 
 #include <stdio.h>
 
@@ -83,7 +82,6 @@ int main(void)
 	/* Tâche de fond, boucle infinie, Infinite loop,... quelque soit son nom vous n'en sortirez jamais */
 	while (1)
 	{
-		mpu_process();
 		asser_current_process();
 		asser_angle_process();
 	}

@@ -100,6 +100,12 @@ MPU6050_Result_t MPU6050_Init(MPU6050_t* DataStruct, GPIO_TypeDef * GPIOx, uint1
 	/* On réveil le MPU6050 */
 	BSP_I2C_Write(MPU6050_I2C, DataStruct->Address, MPU6050_PWR_MGMT_1, 0x00);
 
+	/* On configure le filtre passe-bas */
+	BSP_I2C_Read(MPU6050_I2C, DataStruct->Address, MPU6050_CONFIG, &temp);
+	// fréquence de coupure à 5Hz
+	temp = 0x06;
+	BSP_I2C_Write(MPU6050_I2C, DataStruct->Address, MPU6050_CONFIG, temp);
+
 	/* On config l'accéléromètre */
 	BSP_I2C_Read(MPU6050_I2C, DataStruct->Address, MPU6050_ACCEL_CONFIG, &temp);
 	temp = (temp & 0xE7) | (uint8_t)AccelerometerSensitivity << 3;
