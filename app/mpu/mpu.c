@@ -13,7 +13,7 @@ static angular_speed_t angular_speed = 0;
 
 void mpu_init()
 {
-    MPU6050_Result_t result = MPU6050_Init(&DataStruct, GPIOA, GPIO_PIN_0, MPU6050_Device_0, MPU6050_Accelerometer_2G, MPU6050_Gyroscope_2000s);
+    MPU6050_Result_t result = MPU6050_Init(&DataStruct, GPIOA, GPIO_PIN_1, MPU6050_Device_0, MPU6050_Accelerometer_2G, MPU6050_Gyroscope_2000s);
     if (result != MPU6050_Result_Ok)
     {
         switch (result)
@@ -55,7 +55,7 @@ angle_t mpu_get_angle()
         printf("MPU6050 read error\n");
         return 0;
     }
-    angle_t angle = PI_INT * atan2(DataStruct.Accelerometer_X, DataStruct.Accelerometer_Y) + 3*PI_INT/4;
+    angle_t angle = PI_INT * atan2(DataStruct.Accelerometer_X, DataStruct.Accelerometer_Y) + 25000;
     return angle;
 }
 
