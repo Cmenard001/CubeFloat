@@ -5,7 +5,7 @@
 
 #include <stdint.h>
 
-#define K_VOLTAGE 3 // 1/V
+#define K_VOLTAGE 1 // 1/V
 #define TIME_BTWN_MEASURE 5000 // (µs)
 #define VOLTAGE_MAX (MOTOR_POWER_SUPPLY)
 #define VOLTAGE_MIN (-MOTOR_POWER_SUPPLY)
