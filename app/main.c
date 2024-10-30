@@ -17,6 +17,7 @@
 #include "asser/asser_current/asser_current.h"
 #include "asser/motor/motor.h"
 #include "asser/asser_angle/asser_angle.h"
+#include "mpu/mpu.h"
 
 #include <stdio.h>
 

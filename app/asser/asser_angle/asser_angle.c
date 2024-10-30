@@ -27,9 +27,11 @@ void asser_angle_process()
     angle_t angle = mpu_get_angle();
     angular_speed_t angular_speed = mpu_get_angular_speed();
     angle_t angle_error = target_angle - angle;
+    angular_speed_t angular_speed_target = K_SPEED * angle_error;
+    angular_speed_t angular_speed_error = angular_speed_target - angular_speed;
     // TODO : Documentation
-    int32_t moment_to_stay_up = - CUBE_MASS * GRAVITY_CONST * LEVER_ARM_LENGTH * sinf((float)angle/PI_INT);
-    int32_t moment_to_go_to_speed = (K_SPEED * angle_error - angular_speed) * INERTIA_MOMENT / ASSER_TIME;
+    int32_t moment_to_stay_up = - CUBE_MASS * GRAVITY_CONST * LEVER_ARM_LENGTH * sinf(angle_to_rad(angle));
+    int32_t moment_to_go_to_speed = angular_speed_error * INERTIA_MOMENT / ASSER_TIME / 1000;
     int32_t target_current32 = (moment_to_stay_up + moment_to_go_to_speed) / KT_MOTOR;
     current_t target_current;
     if(target_current32 > 32767)
@@ -50,7 +52,13 @@ void asser_angle_process()
     if (BSP_systick_get_time_us() - last_print_time > 500000)
     {
         last_print_time = BSP_systick_get_time_us();
-        printf("angle : %d, angular_speed : %d, angle_error : %d, accel_to_stay_up : %d, accel_to_go_to_speed : %d, target_current : %d, voltage : %d\n", angle, angular_speed, angle_error, moment_to_stay_up, moment_to_go_to_speed, target_current, motor_get_voltage());
+        printf("angle : %d, ", angle);
+        printf("target_angle : %d, ", target_angle);
+        printf("angular_speed : %d, ", angular_speed);
+        printf("angular_speed_target : %d, ", angular_speed_target);
+        printf("moment_to_stay_up : %d, ", moment_to_stay_up);
+        printf("moment_to_go_to_speed : %d, ", moment_to_go_to_speed);
+        printf("target_current : %d\n", target_current);
     }
 }
 

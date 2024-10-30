@@ -42,7 +42,7 @@ angle_t mpu_get_angle()
         printf("MPU6050 read error\n");
         return 0;
     }
-    angle_t angle = PI_INT * atan2f(DataStruct.Accelerometer_X, DataStruct.Accelerometer_Y) / 2 + 13600;
+    angle_t angle = PI_INT * atan2f(DataStruct.Accelerometer_X, DataStruct.Accelerometer_Y) / 2 + 12000;
     return angle;
 }
 
