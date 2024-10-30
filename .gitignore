@@ -3,6 +3,7 @@ Debug/
 .settings/
 *.cproject
 *.project
+*.launch
 
 # VSCode generated files
 .vscode/
