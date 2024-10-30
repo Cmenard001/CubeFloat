@@ -1,6 +1,9 @@
 #include "success.h"
 #include "stm32g4_systick.h"
 #include "mpu/mpu.h"
+#include "macro.h"
+
+#define MAX_ANGLE (PI_INT/2)
 
 const float WEIGHT_OF_COEFFS[SUCCESS_ID_COUNT] =
 {
@@ -20,7 +23,7 @@ void success_init(success_t *success)
 void success_evaluate_process_1ms(success_t *success)
 {
     angle_t angle = mpu_get_angle();
-    success->sum_angle += angle;
+    success->sum_angle += MAX_ANGLE - ABS(angle);
 }
 
 void success_evaluate_start(success_t *success)

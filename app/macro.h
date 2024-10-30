@@ -7,6 +7,11 @@
 #define UNUSED_VAR(x) (void)(x);
 
 /**
+ * @brief Macro to get the absolute value of a number
+ */
+#define ABS(x) ((x) < 0 ? -(x) : (x))
+
+/**
  * @brief Macro to create a MAE
  * @param enum_type The type of the MAE
  * @param init_state The initial state of the MAE
