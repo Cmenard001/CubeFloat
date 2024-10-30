@@ -9,7 +9,6 @@
 #define TIME_BETWEEN_MPU_READS 10 //ms
 
 static MPU6050_t DataStruct;
-static angular_speed_t angular_speed = 0;
 
 void mpu_init()
 {

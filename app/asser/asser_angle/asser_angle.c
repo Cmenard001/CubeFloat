@@ -52,13 +52,13 @@ void asser_angle_process()
     if (BSP_systick_get_time_us() - last_print_time > 500000)
     {
         last_print_time = BSP_systick_get_time_us();
-        printf("angle : %d, ", angle);
-        printf("target_angle : %d, ", target_angle);
-        printf("angular_speed : %d, ", angular_speed);
-        printf("angular_speed_target : %d, ", angular_speed_target);
-        printf("moment_to_stay_up : %d, ", moment_to_stay_up);
-        printf("moment_to_go_to_speed : %d, ", moment_to_go_to_speed);
-        printf("target_current : %d\n", target_current);
+        printf("angle : %d, ", (int)angle);
+        printf("target_angle : %d, ", (int)target_angle);
+        printf("angular_speed : %d, ", (int)angular_speed);
+        printf("angular_speed_target : %d, ", (int)angular_speed_target);
+        printf("moment_to_stay_up : %d, ", (int)moment_to_stay_up);
+        printf("moment_to_go_to_speed : %d, ", (int)moment_to_go_to_speed);
+        printf("target_current : %d\n", (int)target_current);
     }
 }
 
