@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #define TIME_MIN_EXPERIMENT 1000000 // 1 second
+#define TIME_MAX_EXPERIMENT 10000000 // 10 seconds
 #define ANGLE_GROUND_TOLERANCE (PI_INT / 16)
 #define ANGLE_GROUND_MIN (-PI_INT / 4 + ANGLE_GROUND_TOLERANCE)
 #define ANGLE_GROUND_MAX (PI_INT / 4 - ANGLE_GROUND_TOLERANCE)
@@ -22,17 +23,20 @@
 static bool check_if_experiment_finished(uint32_t start_time);
 static bool check_if_experiment_finished(uint32_t start_time)
 {
-    // Check if the cube is on ground
+    uint32_t elapsed_time = BSP_systick_get_time_us() - start_time;
+    // Check if the cube is still on the ground
     angle_t angle = mpu_get_angle();
-    if (angle < ANGLE_GROUND_MIN || angle > ANGLE_GROUND_MAX)
+    if ((angle < ANGLE_GROUND_MIN || angle > ANGLE_GROUND_MAX)
+        && elapsed_time > TIME_MIN_EXPERIMENT)
     {
-        return false;
+        return true;
     }
-    if (BSP_systick_get_time_us() - start_time < TIME_MIN_EXPERIMENT)
+    // Check if the experiment is too long
+    if (elapsed_time > TIME_MAX_EXPERIMENT)
     {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 }
 
 /**
