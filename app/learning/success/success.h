@@ -22,7 +22,8 @@ typedef enum
 typedef struct
 {
     uint32_t start_time;
-    uint32_t sum_angle;
+    uint64_t sum_angle;
+    uint32_t nb_mesures;
     success_coeff_t coeffs[SUCCESS_ID_COUNT];
 } success_t;
 
