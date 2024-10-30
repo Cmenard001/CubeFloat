@@ -19,8 +19,8 @@
  * @return true If the experiment is finished
  * @return false If the experiment is not finished
  */
-static bool is_experiment_finished(experiment_t *experiment, uint32_t start_time);
-static bool is_experiment_finished(experiment_t *experiment, uint32_t start_time)
+static bool check_if_experiment_finished(uint32_t start_time);
+static bool check_if_experiment_finished(uint32_t start_time)
 {
     // Check if the cube is on ground
     angle_t angle = mpu_get_angle();
@@ -59,38 +59,35 @@ void experiment_init(experiment_t *experiment, const_slot_t *slot, success_t *su
     // Make a copy of the slot and success
     experiment->slot = *slot;
     experiment->success = *success;
+    experiment->state = EXPERIMENT_STATE_DISABLED;
+    experiment->start_time = 0;
 }
 
-experiment_state_t experiment_run(experiment_t *experiment)
+void experiment_start(experiment_t *experiment)
 {
-    experiment_state_t to_return = EXPERIMENT_STATE_IN_PROGRESS;
+    experiment->start_time = BSP_systick_get_time_us();
+    experiment->state = EXPERIMENT_STATE_IN_PROGRESS;
+    success_evaluate_start(&experiment->success);
+}
 
-    CREATE_MAE(experiment_mae_t, INIT, IN_PROGRESS, FINISHED);
-
-    static uint32_t start_time = 0;
-
-    switch(state)
+void experiment_process_1ms(experiment_t *experiment)
+{
+    if (experiment->state == EXPERIMENT_STATE_IN_PROGRESS)
     {
-        case INIT:
-            start_time = BSP_systick_get_time_us();
-            state = IN_PROGRESS;
-            break;
+        // Process the success
+        success_evaluate_process_1ms(&experiment->success);
 
-        case IN_PROGRESS:
-            // Try to asser the cube
-            try_asser_cube(experiment);
-            if (is_experiment_finished(experiment, start_time))
-            {
-                state = FINISHED;
-            }
-            break;
-
-        case FINISHED:
-            // Reset the MAE and return the finished state
-            to_return = EXPERIMENT_STATE_FINISHED;
-            RESET_MAE();
-            break;
+        // Try to asser the cube
+        try_asser_cube(experiment);
+        if (check_if_experiment_finished(experiment->start_time))
+        {
+            experiment->state = EXPERIMENT_STATE_FINISHED;
+            success_evaluate_end(&experiment->success);
+        }
     }
+}
 
-    return to_return;
+experiment_state_t is_experiment_finished(experiment_t *experiment)
+{
+    return experiment->state;
 }
