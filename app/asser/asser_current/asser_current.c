@@ -19,7 +19,6 @@
 static current_t current_order = 0;
 
 static void asser_current();
-
 static void asser_current()
 {
     voltage_t voltage = motor_get_voltage();
@@ -46,18 +45,12 @@ void asser_current_init()
 {
     BSP_ADC_init();
     motor_init();
+    BSP_systick_add_callback_function(&asser_current_process_1ms);
 }
 
-void asser_current_process()
+void asser_current_process_1ms()
 {
-    // Process the current asserv every TIME_BTWN_MEASURE
-    static uint32_t previous_time = 0;
-    uint32_t current_time = BSP_systick_get_time_us();
-    if (current_time - previous_time > TIME_BTWN_MEASURE)
-    {
-        previous_time = current_time;
-        asser_current();
-    }
+    asser_current();
 }
 
 current_t asser_current_get()

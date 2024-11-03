@@ -21,9 +21,9 @@ typedef int16_t current_t;
 
 /**
  * @brief Process moin of the current module
- * @note This function must be called in the main loop
+ * @note This function must be called every 1ms
  */
-void asser_current_process();
+void asser_current_process_1ms();
 
 /**
  * @brief Initialize the current module

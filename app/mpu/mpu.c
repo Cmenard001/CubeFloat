@@ -9,7 +9,6 @@
 #define TIME_BETWEEN_MPU_READS 10 //ms
 
 static MPU6050_t DataStruct;
-static angular_speed_t angular_speed = 0;
 
 void mpu_init()
 {
@@ -42,7 +41,7 @@ angle_t mpu_get_angle()
         printf("MPU6050 read error\n");
         return 0;
     }
-    angle_t angle = PI_INT * atan2f(DataStruct.Accelerometer_X, DataStruct.Accelerometer_Y) / 2 + 12000;
+    angle_t angle = PI_INT * atan2f(DataStruct.Accelerometer_X, DataStruct.Accelerometer_Y) / 2 - 26600;
     return angle;
 }
 

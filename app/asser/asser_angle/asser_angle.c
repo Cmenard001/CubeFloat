@@ -12,7 +12,7 @@
 #define LEVER_ARM_LENGTH 80 // mm
 #define K_SPEED 100 // 1/ms
 #define ASSER_TIME 100 // ms
-#define KT_MOTOR (1000) // mN·mm/mA
+#define KT_MOTOR 20 // mN·mm/mA
 #define INERTIA_MOMENT 1 // g/mm^2
 
 static angle_t target_angle = 0;
@@ -20,9 +20,10 @@ static angle_t target_angle = 0;
 void asser_angle_init()
 {
     target_angle = 0;
+    BSP_systick_add_callback_function(&asser_angle_process_1ms);
 }
 
-void asser_angle_process()
+void asser_angle_process_1ms()
 {
     angle_t angle = mpu_get_angle();
     angular_speed_t angular_speed = mpu_get_angular_speed();
@@ -30,8 +31,8 @@ void asser_angle_process()
     angular_speed_t angular_speed_target = K_SPEED * angle_error;
     angular_speed_t angular_speed_error = angular_speed_target - angular_speed;
     // TODO : Documentation
-    int32_t moment_to_stay_up = - CUBE_MASS * GRAVITY_CONST * LEVER_ARM_LENGTH * sinf(angle_to_rad(angle));
-    int32_t moment_to_go_to_speed = angular_speed_error * INERTIA_MOMENT / ASSER_TIME / 1000;
+    int32_t moment_to_stay_up = CUBE_MASS * GRAVITY_CONST * LEVER_ARM_LENGTH * sinf(angle_to_rad(angle));
+    int32_t moment_to_go_to_speed = 0;//- angular_speed_error * INERTIA_MOMENT / ASSER_TIME / 1000;
     int32_t target_current32 = (moment_to_stay_up + moment_to_go_to_speed) / KT_MOTOR;
     current_t target_current;
     if(target_current32 > 32767)
@@ -53,12 +54,12 @@ void asser_angle_process()
     {
         last_print_time = BSP_systick_get_time_us();
         printf("angle : %d, ", angle);
-        printf("target_angle : %d, ", target_angle);
-        printf("angular_speed : %d, ", angular_speed);
-        printf("angular_speed_target : %d, ", angular_speed_target);
-        printf("moment_to_stay_up : %d, ", moment_to_stay_up);
-        printf("moment_to_go_to_speed : %d, ", moment_to_go_to_speed);
-        printf("target_current : %d\n", target_current);
+        printf("target_angle : %d, ", (int)target_angle);
+        printf("angular_speed : %d, ", (int)angular_speed);
+        printf("angular_speed_target : %d, ", (int)angular_speed_target);
+        printf("moment_to_stay_up : %d, ", (int)moment_to_stay_up);
+        printf("moment_to_go_to_speed : %d, ", (int)moment_to_go_to_speed);
+        printf("target_current : %d\n", (int)target_current);
     }
 }
 
