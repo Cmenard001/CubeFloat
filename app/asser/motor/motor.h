@@ -10,7 +10,7 @@
  * @note The unit of the voltage_t type is mV
  * @note The voltage can be negative to reverse the motor
  */
-typedef int16_t voltage_t;
+typedef int32_t voltage_t;
 
 /**
  * @brief Initialize the motor module

@@ -5,11 +5,11 @@
 
 #include <stdint.h>
 
-#define K_VOLTAGE 1 // 1/V
-#define TIME_BTWN_MEASURE 5000 // (µs)
+#define K_VOLTAGE 5000 // mV.A^-1.ms^-1
 #define VOLTAGE_MAX (MOTOR_POWER_SUPPLY)
 #define VOLTAGE_MIN (-MOTOR_POWER_SUPPLY)
 #define CURRENT_OFFSET 50 // mA
+#define MAX_CURRENT 2500 // mA
 
 #define DIRECTION(A) ((A) > 0 ? true : false)
 
@@ -26,7 +26,7 @@ static void asser_current()
     current_t current = asser_current_get();
     current_t current_error = current_order - current;
     // Compute the new voltage
-    voltage += K_VOLTAGE * current_error;
+    voltage += K_VOLTAGE * current_error / 1000;
 
     // Check the voltage limit
     if (voltage > VOLTAGE_MAX)
@@ -63,7 +63,7 @@ current_t asser_current_get()
     // The ADC is on 3.3V
     // The current return is in mA
     // So the formula is :
-    current_t current = (current_t)((((int32_t)adc_mesure)*3300)/4096) + CURRENT_OFFSET;
+    current_t current = (current_t)((((int32_t)adc_mesure)*3300)/4096) - CURRENT_OFFSET;
     if (motor_get_voltage() < 0)
     {
         current = -current;
@@ -79,4 +79,12 @@ current_t asser_current_order_get()
 void asser_current_set_order(current_t current)
 {
     current_order = current;
+    if(current_order > MAX_CURRENT)
+    {
+        current_order = MAX_CURRENT;
+    }
+    else if(current_order < -MAX_CURRENT)
+    {
+        current_order = -MAX_CURRENT;
+    }
 }

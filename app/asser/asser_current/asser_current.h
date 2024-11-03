@@ -17,7 +17,7 @@
  * @brief Current type
  * @note The unit of the current_t type is mA
  */
-typedef int16_t current_t;
+typedef int32_t current_t;
 
 /**
  * @brief Process moin of the current module

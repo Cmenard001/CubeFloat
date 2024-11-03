@@ -48,7 +48,7 @@ void asser_angle_process_1ms()
         target_current = (current_t)target_current32;
     }
     asser_current_set_order(target_current);
-    // Print som debugs values every 1000ms
+    // Print som debugs values sometimes
     static uint32_t last_print_time = 0;
     if (BSP_systick_get_time_us() - last_print_time > 500000)
     {
@@ -59,7 +59,8 @@ void asser_angle_process_1ms()
         printf("angular_speed_target : %d, ", (int)angular_speed_target);
         printf("moment_to_stay_up : %d, ", (int)moment_to_stay_up);
         printf("moment_to_go_to_speed : %d, ", (int)moment_to_go_to_speed);
-        printf("target_current : %d\n", (int)target_current);
+        printf("target_current : %d ", (int)target_current);
+        printf("mesured current : %d\n", (int)asser_current_get());
     }
 }
 
