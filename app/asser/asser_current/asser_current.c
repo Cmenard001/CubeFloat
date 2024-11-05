@@ -5,13 +5,11 @@
 
 #include <stdint.h>
 
-#define VOLTAGE_INCREMENT 1 // (mV)
-#define TIME_BTWN_MEASURE 30 // (µs)
+#define K_VOLTAGE 5000 // mV.A^-1.ms^-1
 #define VOLTAGE_MAX (MOTOR_POWER_SUPPLY)
 #define VOLTAGE_MIN (-MOTOR_POWER_SUPPLY)
 #define CURRENT_OFFSET 50 // mA
-#define COEFF_P 100
-#define COEFF_BASE 100
+#define MAX_CURRENT 2500 // mA
 
 #define DIRECTION(A) ((A) > 0 ? true : false)
 
@@ -21,21 +19,14 @@
 static current_t current_order = 0;
 
 static void asser_current();
-
 static void asser_current()
 {
     voltage_t voltage = motor_get_voltage();
     // Get the current
     current_t current = asser_current_get();
-    // Compare the current with the order
-    if (current < current_order)
-    {
-        voltage += VOLTAGE_INCREMENT;
-    }
-    else if (current > current_order)
-    {
-        voltage -= VOLTAGE_INCREMENT;
-    }
+    current_t current_error = current_order - current;
+    // Compute the new voltage
+    voltage += K_VOLTAGE * current_error / 1000;
 
     // Check the voltage limit
     if (voltage > VOLTAGE_MAX)
@@ -54,18 +45,12 @@ void asser_current_init()
 {
     BSP_ADC_init();
     motor_init();
+    BSP_systick_add_callback_function(&asser_current_process_1ms);
 }
 
-void asser_current_process()
+void asser_current_process_1ms()
 {
-    // Process the current asserv every TIME_BTWN_MEASURE
-    static uint32_t previous_time = 0;
-    uint32_t current_time = BSP_systick_get_time_us();
-    if (current_time - previous_time > TIME_BTWN_MEASURE)
-    {
-        previous_time = current_time;
-        asser_current();
-    }
+    asser_current();
 }
 
 current_t asser_current_get()
@@ -78,8 +63,8 @@ current_t asser_current_get()
     // The ADC is on 3.3V
     // The current return is in mA
     // So the formula is :
-    current_t current = (current_t)((((int32_t)adc_mesure)*5000)/4096) - CURRENT_OFFSET;
-    if (current_order < 0)
+    current_t current = (current_t)((((int32_t)adc_mesure)*3300)/4096) - CURRENT_OFFSET;
+    if (motor_get_voltage() < 0)
     {
         current = -current;
     }
@@ -94,4 +79,12 @@ current_t asser_current_order_get()
 void asser_current_set_order(current_t current)
 {
     current_order = current;
+    if(current_order > MAX_CURRENT)
+    {
+        current_order = MAX_CURRENT;
+    }
+    else if(current_order < -MAX_CURRENT)
+    {
+        current_order = -MAX_CURRENT;
+    }
 }

@@ -1,3 +1,8 @@
 # STM32CubeIDE generated files
 Debug/
 .settings/
+*.cproject
+*.project
+
+# VSCode generated files
+.vscode/

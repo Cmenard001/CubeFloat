@@ -96,8 +96,6 @@ HAL_StatusTypeDef BSP_I2C_Init(I2C_TypeDef* I2Cx, I2C_speed_mode_e speed_mode, b
  */
 void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
 {
-
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
   if(i2cHandle->Instance==I2C1)
   {

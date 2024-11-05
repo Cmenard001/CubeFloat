@@ -16,6 +16,7 @@
 #include "stm32g4_utils.h"
 #include "asser/asser_current/asser_current.h"
 #include "asser/motor/motor.h"
+#include "asser/asser_angle/asser_angle.h"
 #include "mpu/mpu.h"
 
 #include <stdio.h>
@@ -77,11 +78,12 @@ int main(void)
 	asser_current_init();
 	asser_current_set_order(0);
 	motor_set_voltage(0);
+	asser_angle_init();
 	mpu_init();
 
 	/* Tâche de fond, boucle infinie, Infinite loop,... quelque soit son nom vous n'en sortirez jamais */
 	while (1)
 	{
-		asser_current_process();
+
 	}
 }
