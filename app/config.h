@@ -30,12 +30,12 @@
 
 #define USE_ADC				1
 	/* Configuration pour activer les entrÃ©es analogiques souhaitÃ©es */
-	#define USE_IN1		1 //Broche correspondante: PA0
+	#define USE_IN1		0 //Broche correspondante: PA0
 	#define USE_IN2		0 //Broche correspondante: PA1
-	#define USE_IN3		0 //Broche correspondante: PA6
-	#define USE_IN4		0 //Broche correspondante: PA7
+	#define USE_IN3		1 //Broche correspondante: PA6
+	#define USE_IN4		1 //Broche correspondante: PA7
 	#define USE_IN10	0 //Broche correspondante: PF1 /!\ Broche indisponible sur g431 sauf si SB11 et pas SB10 (petits pads Ã  souder sur la carte)
-	#define USE_IN13	0 //Broche correspondante: PA5
+	#define USE_IN13	1 //Broche correspondante: PA5
 	#define USE_IN17	0 //Broche correspondante: PA4
 
 #define USE_DAC				0

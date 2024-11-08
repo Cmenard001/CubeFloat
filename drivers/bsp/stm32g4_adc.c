@@ -3,7 +3,7 @@
  * @file	stm32g4_adc.c
  * @author	vchav
  * @date	May 23, 2024
- * @brief	
+ * @brief
  *******************************************************************************
  */
 
@@ -19,7 +19,7 @@
 #define ADC_NB_OF_CHANNEL_USED	(USE_IN1 + USE_IN2 + USE_IN3 + USE_IN4 + USE_IN10 + USE_IN13 + USE_IN17)
 
 
-static uint32_t adc_converted_value[ADC_NB_OF_CHANNEL_USED];//Ce tableau contient les valeurs mesurées par l'ADC pour chaque canal.
+static uint16_t adc_converted_value[ADC_NB_OF_CHANNEL_USED];//Ce tableau contient les valeurs mesurées par l'ADC pour chaque canal.
 static int8_t adc_id[ADC_CHANNEL_NB];						//Ce tableau contient les rang de chaque canal dans le tableau adc_converted_value. Usage privé à ce fichier.
 static ADC_HandleTypeDef	hadc;							//Handler pour l'ADC.
 static DMA_HandleTypeDef	hdma;							//Handler pour le DMA.
