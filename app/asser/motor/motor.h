@@ -3,6 +3,9 @@
 
 #include <stdint.h>
 
+/**
+ * @brief Power supply of the motor (mV)
+ */
 #define MOTOR_POWER_SUPPLY 20000 // mV
 
 /**
