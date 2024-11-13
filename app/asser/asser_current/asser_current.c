@@ -7,11 +7,11 @@
 
 #include <stdint.h>
 
-#define K_VOLTAGE 1000 // mV.A^-1.ms^-1
+#define K_VOLTAGE 3000 // mV.A^-1.ms^-1
 #define VOLTAGE_INCREMENT 0 // mV.ms^-1
 #define VOLTAGE_MAX (MOTOR_POWER_SUPPLY)
 #define VOLTAGE_MIN (-MOTOR_POWER_SUPPLY)
-#define MAX_CURRENT 2500 // mA
+#define MAX_CURRENT 10000 // mA
 
 // Current probe
 // ADC for compute current
@@ -96,7 +96,7 @@ void asser_current_process_1ms()
 current_t asser_current_get()
 {
     // Mesure the current on the probe
-    current_t current = (avg_adc_values[1].adc_mesure_sum - avg_adc_values[0].adc_mesure_sum) * 1000 / 1930;
+    current_t current = (avg_adc_values[1].adc_mesure_sum - avg_adc_values[0].adc_mesure_sum) / 10;
     return current;
 }
 
