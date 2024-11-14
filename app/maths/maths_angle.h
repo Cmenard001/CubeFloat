@@ -4,7 +4,7 @@
 #include <math.h>
 #include <stdint.h>
 
-#define PI_FLOAT 3.14159265358979323846f
+#define PI_FLOAT (3.14159f)
 
 /**
  * @brief Angle type

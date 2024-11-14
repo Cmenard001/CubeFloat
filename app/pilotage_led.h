@@ -50,13 +50,13 @@ void droite_TAB(angle_t angle);
 * @param angle Angle de la ligne en degrés.
 * @param x Coordonnée x du pixel.
 * @param y Coordonnée y du pixel.
-* @return uint8_t Distance du pixel par rapport à la ligne.
+* @return int8_t Distance du pixel par rapport à la ligne.
 */
-uint8_t dist_droite_pixel(angle_t angle, uint8_t x, uint8_t y );
+int8_t dist_droite_pixel(angle_t angle, uint8_t x, uint8_t y );
 
 /**
 * @brief cette fonction sert à afficher la matrice LEDs avec le contenu du tableau 'tab_LED'.
-* Cette fonction convertit les valeurs du tableau `tab_LED` en une matrice de 64 pixels, 
+* Cette fonction convertit les valeurs du tableau `tab_LED` en une matrice de 64 pixels,
 * puis envoie les données au driver WS2812 pour afficher les couleurs sur les LEDs.
 */
 void afficher_matrice(void);
