@@ -25,8 +25,7 @@ float rad_modulo(float angle)
 
 float angle_to_rad(angle_t angle)
 {
-    angle = rad_modulo((float)angle * PI_FLOAT / (float)PI_INT);
-    return angle;
+    return (float)angle * PI_FLOAT / (float)PI_INT;
 }
 
 angle_t rad_to_angle(float angle)

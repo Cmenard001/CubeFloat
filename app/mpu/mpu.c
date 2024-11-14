@@ -47,8 +47,7 @@ angle_t mpu_get_angle()
         (See a trigonometry course to understand this formula)
         The angle is then converted to the range [-PI_INT ; PI_INT]
     */
-    // TODO : Remove the offset to put it in asser_angle
-    angle_t angle = PI_INT * atan2f(DataStruct.Accelerometer_X, DataStruct.Accelerometer_Y) / 2 - 27200;
+    angle_t angle = rad_to_angle(atan2f(DataStruct.Accelerometer_X, DataStruct.Accelerometer_Y));
     return angle;
 }
 
@@ -64,6 +63,6 @@ angular_speed_t mpu_get_angular_speed()
         Gyroscope values are in degrees per second
         We convert them to radians per second
     */
-    angular_speed_t angular_speed = PI_INT * DataStruct.Gyroscope_Z / 180;
+    angular_speed_t angular_speed = deg_to_angle(DataStruct.Gyroscope_Z)
     return angular_speed;
 }

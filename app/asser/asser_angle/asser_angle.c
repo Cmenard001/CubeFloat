@@ -19,6 +19,8 @@
 #define KT_MOTOR 100 // mN·mm/mA
 #define INERTIA_MOMENT 100 // g/mm^2
 
+#define TARGET_ANGLE 27200
+
 /**
  * @brief Target angle
  */
@@ -26,7 +28,7 @@ static angle_t target_angle = 0;
 
 void asser_angle_init()
 {
-    target_angle = 0;
+    target_angle = TARGET_ANGLE;
 }
 
 void asser_angle_process_main()

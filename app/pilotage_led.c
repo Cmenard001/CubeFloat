@@ -8,6 +8,7 @@
 #include "WS2812/stm32g4_ws2812.h"
 #include "MPU6050/stm32g4_mpu6050.h"
 #include <math.h>
+#include "maths/maths_angle.h"
 #include "mpu/mpu.h"
 #include "stm32g4_systick.h"
 
