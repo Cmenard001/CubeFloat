@@ -14,12 +14,12 @@
 #define CUBE_MASS 878 // g
 #define GRAVITY_CONST 10 // mN/g or mm/ms^2
 #define LEVER_ARM_LENGTH 80 // mm
-#define K_SPEED 1 // ms^-1
+#define K_SPEED 10 // ms^-1
 #define ASSER_TIME 10 // ms
-#define KT_MOTOR 100 // mN·mm/mA
-#define INERTIA_MOMENT 100 // g/mm^2
+#define KT_MOTOR 1000 // mN·mm/mA
+#define INERTIA_MOMENT 1000 // g/mm^2
 
-#define TARGET_ANGLE 27200
+#define TARGET_ANGLE (3*PI_INT/4)
 
 /**
  * @brief Target angle
@@ -83,7 +83,7 @@ void asser_angle_process_main()
         - I: current necessary to reach the target angle
         - KT: engine torque constant
     */
-    int32_t moment_to_stay_up = - CUBE_MASS * GRAVITY_CONST * LEVER_ARM_LENGTH * sinf(angle_to_rad(angle));
+    int32_t moment_to_stay_up = CUBE_MASS * GRAVITY_CONST * LEVER_ARM_LENGTH * sinf(angle_to_rad(angle_error));
     int32_t moment_to_go_to_speed = angular_speed_error * INERTIA_MOMENT / ASSER_TIME;
     current_t target_current = (moment_to_stay_up + moment_to_go_to_speed) / KT_MOTOR;
 

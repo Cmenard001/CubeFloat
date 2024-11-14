@@ -10,7 +10,7 @@
 /**
  * @brief Constants to control the current
  */
-#define K_VOLTAGE 3000 // mV.A^-1.ms^-1
+#define K_VOLTAGE 10000 // mV.A^-1.ms^-1
 #define VOLTAGE_INCREMENT 0 // mV.ms^-1
 #define VOLTAGE_MAX (MOTOR_POWER_SUPPLY)
 #define VOLTAGE_MIN (-MOTOR_POWER_SUPPLY)

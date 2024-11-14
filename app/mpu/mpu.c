@@ -63,6 +63,6 @@ angular_speed_t mpu_get_angular_speed()
         Gyroscope values are in degrees per second
         We convert them to radians per second
     */
-    angular_speed_t angular_speed = deg_to_angle(DataStruct.Gyroscope_Z)
+    angular_speed_t angular_speed = deg_to_angle(DataStruct.Gyroscope_Z);
     return angular_speed;
 }
