@@ -9,15 +9,17 @@
 
 #include "config.h"
 #include "stm32g4_sys.h"
-
+#include "stm32g431xx.h"
 #include "stm32g4_systick.h"
 #include "stm32g4_gpio.h"
 #include "stm32g4_uart.h"
 #include "stm32g4_utils.h"
+#include "stm32g4_systick.h"
 #include "asser/asser_current/asser_current.h"
 #include "asser/motor/motor.h"
 #include "asser/asser_angle/asser_angle.h"
 #include "mpu/mpu.h"
+#include "pilotage_led.h"
 
 #include <stdio.h>
 
@@ -38,6 +40,8 @@ int main(void)
 	BSP_GPIO_enable();
 	BSP_UART_init(UART2_ID, UART_BAUDRATE);
 
+	BSP_systick_init();
+
 	/* Indique que les printf sont dirigés vers l'UART2 */
 	BSP_SYS_set_std_usart(UART2_ID, UART2_ID, UART2_ID);
 
@@ -54,10 +58,10 @@ int main(void)
 	asser_current_set_order(0);
 	mpu_init();
 	asser_angle_init();
-
+	pilotage_led_init();
 	/* Tâche de fond, boucle infinie, Infinite loop,... quelque soit son nom vous n'en sortirez jamais */
 	while (1)
 	{
-
+		process_main_pilotage_led();
 	}
 }
