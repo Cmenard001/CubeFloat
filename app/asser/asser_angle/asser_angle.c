@@ -27,10 +27,9 @@ static angle_t target_angle = 0;
 void asser_angle_init()
 {
     target_angle = 0;
-    BSP_systick_add_callback_function(&asser_angle_process_1ms);
 }
 
-void asser_angle_process_1ms()
+void asser_angle_process_main()
 {
     angle_t angle = mpu_get_angle();
     angular_speed_t angular_speed = mpu_get_angular_speed();

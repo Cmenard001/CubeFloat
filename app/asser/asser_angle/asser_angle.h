@@ -10,9 +10,9 @@ void asser_angle_init();
 
 /**
  * @brief Function to process the asser_angle
- * @note This function must be called every 1ms
+ * @note This function must be called in the main loop
  */
-void asser_angle_process_1ms();
+void asser_angle_process_main();
 
 /**
  * @brief Function to set the target angle

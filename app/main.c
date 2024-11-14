@@ -62,6 +62,7 @@ int main(void)
 	/* Tâche de fond, boucle infinie, Infinite loop,... quelque soit son nom vous n'en sortirez jamais */
 	while (1)
 	{
+		asser_angle_process_main();
 		process_main_pilotage_led();
 	}
 }
