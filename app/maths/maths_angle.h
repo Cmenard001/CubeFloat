@@ -4,6 +4,8 @@
 #include <math.h>
 #include <stdint.h>
 
+#define PI_FLOAT (3.14159f)
+
 /**
  * @brief Angle type
  * @see PI_INT It's the unit of the angle_t type
@@ -60,6 +62,8 @@ full_angle_t deg_to_angle(int16_t angle);
  * @return float The angle in radian
  */
 float angle_to_rad(angle_t angle);
+
+float rad_modulo(float angle);
 
 /**
  * @brief Function to convert a radian to an angle

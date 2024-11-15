@@ -7,30 +7,44 @@
 
 #include <stdint.h>
 
-#define K_VOLTAGE 3000 // mV.A^-1.ms^-1
+/**
+ * @brief Constants to control the current
+ */
+#define K_VOLTAGE 10000 // mV.A^-1.ms^-1
 #define VOLTAGE_INCREMENT 0 // mV.ms^-1
 #define VOLTAGE_MAX (MOTOR_POWER_SUPPLY)
 #define VOLTAGE_MIN (-MOTOR_POWER_SUPPLY)
-#define MAX_CURRENT 10000 // mA
+#define MAX_CURRENT 20000 // mA
 
-// Current probe
-// ADC for compute current
+/**
+ * @brief ADC used to compute the current
+ */
 #define CURRENT_ADC_WAY_1 ADC_4
 #define CURRENT_ADC_WAY_2 ADC_13
-#define NB_ECHANTILLON 10
+
+/**
+ * @brief Number of samples to compute the average
+ */
+#define NB_SAMPLES 10
 
 /**
  * @brief Order of current
  */
 static current_t current_order = 0;
 
+/**
+ * @brief Structure to store the average value
+ */
 typedef struct
 {
     int32_t adc_mesure_sum;
-    int32_t adc_mesure_tab[NB_ECHANTILLON];
+    int32_t adc_mesure_tab[NB_SAMPLES];
     int32_t adc_mesure_index;
 } avg_value_t;
 
+/**
+ * @brief Array of average values of each ADC
+ */
 static avg_value_t avg_adc_values[2] =
 {
     {
@@ -45,6 +59,9 @@ static avg_value_t avg_adc_values[2] =
     }
 };
 
+/**
+ * @brief Function to control the current
+ */
 static void asser_current();
 static void asser_current()
 {
@@ -53,6 +70,7 @@ static void asser_current()
     current_t current = asser_current_get();
     current_t current_error = current_order - current;
     // Compute the new voltage
+    // Apply an integral control
     voltage_t voltage_increment = current_error < 0 ? -VOLTAGE_INCREMENT : VOLTAGE_INCREMENT;
     voltage += K_VOLTAGE * current_error / 1000 + voltage_increment;
 
@@ -77,26 +95,41 @@ void asser_current_init()
 
 void asser_current_process_1ms()
 {
+    // Get the the 2 ADC values
     int32_t adc_mesure_1 = BSP_ADC_getValue(CURRENT_ADC_WAY_1);
     int32_t adc_mesure_2 = BSP_ADC_getValue(CURRENT_ADC_WAY_2);
 
+    // Compute the average value of each ADC
     avg_adc_values[0].adc_mesure_sum -= avg_adc_values[0].adc_mesure_tab[avg_adc_values[0].adc_mesure_index];
     avg_adc_values[0].adc_mesure_sum += adc_mesure_1;
     avg_adc_values[0].adc_mesure_tab[avg_adc_values[0].adc_mesure_index] = adc_mesure_1;
-    avg_adc_values[0].adc_mesure_index = (avg_adc_values[0].adc_mesure_index + 1) % NB_ECHANTILLON;
+    avg_adc_values[0].adc_mesure_index = (avg_adc_values[0].adc_mesure_index + 1) % NB_SAMPLES;
 
     avg_adc_values[1].adc_mesure_sum -= avg_adc_values[1].adc_mesure_tab[avg_adc_values[1].adc_mesure_index];
     avg_adc_values[1].adc_mesure_sum += adc_mesure_2;
     avg_adc_values[1].adc_mesure_tab[avg_adc_values[1].adc_mesure_index] = adc_mesure_2;
-    avg_adc_values[1].adc_mesure_index = (avg_adc_values[1].adc_mesure_index + 1) % NB_ECHANTILLON;
+    avg_adc_values[1].adc_mesure_index = (avg_adc_values[1].adc_mesure_index + 1) % NB_SAMPLES;
 
+    // Control the current
     asser_current();
 }
 
 current_t asser_current_get()
 {
-    // Mesure the current on the probe
-    current_t current = (avg_adc_values[1].adc_mesure_sum - avg_adc_values[0].adc_mesure_sum) / 10;
+    /*
+        Measure the current with the 2 ADC values
+
+        Firstly, voltage = (adc_mesure_1 - adc_mesure_2) * 3300 / 4096
+        I = U / R
+        With R = 1 Ohm
+        I = (adc_mesure_1 - adc_mesure_2) * 3300 / 4096 / 1
+
+        Then, we have to divide by 10 because the current is measured 10 times per second
+
+        So the current is (adc_mesure_1 - adc_mesure_2) * 3300 / 4096 / 1 / 10
+        <=> (adc_mesure_1 - adc_mesure_2) * 330 / 4096
+    */
+    current_t current = (avg_adc_values[1].adc_mesure_sum - avg_adc_values[0].adc_mesure_sum) * 330 / 4096;
     return current;
 }
 
