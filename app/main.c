@@ -54,6 +54,7 @@ int main(void)
 	/* Initialization of cube modules */
 	motor_init();
 	motor_set_voltage(0);
+	// asser_current_test(-3000);
 	asser_current_init();
 	asser_current_set_order(0);
 	mpu_init();

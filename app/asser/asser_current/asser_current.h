@@ -49,4 +49,11 @@ current_t asser_current_order_get();
  */
 void asser_current_set_order(current_t current);
 
+/**
+ * @brief Test the current module
+ *
+ * @param current The current in mA to try to reach
+ */
+void asser_current_test(current_t current);
+
 #endif

@@ -4,6 +4,7 @@
 #include "stm32g4_systick.h"
 #include "stm32g4_gpio.h"
 #include "stm32g4xx_hal_gpio.h"
+#include "stm32g4xx_hal.h"
 
 #include <stdint.h>
 
@@ -148,5 +149,27 @@ void asser_current_set_order(current_t current)
     else if(current_order < -MAX_CURRENT)
     {
         current_order = -MAX_CURRENT;
+    }
+}
+
+
+void asser_current_test(current_t current)
+{
+    asser_current_init();
+    asser_current_set_order(current);
+    while (1)
+    {
+        // Print som debugs values sometimes
+        static uint32_t last_print_time = 0;
+        if (BSP_systick_get_time_us() - last_print_time > 500000)
+        {
+            last_print_time = BSP_systick_get_time_us();
+            printf("current : %d, ", (int)current);
+            printf("mesured current : %d\n", (int)asser_current_get());
+        }
+        //asser_current_set_order(current);
+        //HAL_Delay(1000);
+        //asser_current_set_order(-current);
+        //HAL_Delay(1000);
     }
 }
